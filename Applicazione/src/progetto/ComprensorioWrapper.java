@@ -3,10 +3,6 @@ package progetto;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-
-@XmlRootElement(name = "comprensori")
 public class ComprensorioWrapper {
 
     private ArrayList<Comprensorio> comprensori;
@@ -15,8 +11,12 @@ public class ComprensorioWrapper {
     	this.comprensori = comprensori;
 	}
 
-	@XmlElement(name = "comprensorio")
-    public ArrayList<Comprensorio> getComprensori() {
+	
+    public ComprensorioWrapper() {
+	}
+
+
+	public ArrayList<Comprensorio> getComprensori() {
 		if (comprensori == null) {
 	        comprensori = new ArrayList<>();
 	    }

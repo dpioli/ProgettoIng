@@ -10,7 +10,7 @@ public class Autenticazione {
     private Map<String, String> credenziali = new HashMap<>(); // Mappa username -> password
     private static final String USERNAME_DEFAULT = "configuratore";
     private static final String PASSWORD_DEFAULT = "password";
-    private static final String CREDENZIALI = "credenziali.xml"; //boh spe
+    private static final String CREDENZIALI = "../Applicazione/src/dati/credenzialiConfiguratori.json"; //boh spe
 
     public Autenticazione() {
         // Credenziali predefinite per il primo accesso

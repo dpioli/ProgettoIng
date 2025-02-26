@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
@@ -228,6 +229,7 @@ public class ClientHandler implements Runnable {
         }
     }
     public void effettuaPrimoAccessoConfiguratore(Configuratore conf) {
+    	HashMap<String, String> credenzialiConfig = new HashMap<>();
     	System.out.println(RILEVATO_PRIMO_ACCESSO);
     	inviaStatoAlClient(PRIMO_ACCESSO_RILEVATO);
         
@@ -253,6 +255,8 @@ public class ClientHandler implements Runnable {
         }while(nuovaPassword.length() < 7);
         
 		conf.effettuaPrimoAccesso(nuovoUsername, nuovaPassword);
+		credenzialiConfig.put(nuovoUsername, nuovaPassword);
+		gp.salvaCredenzialiConfig(credenzialiConfig);
 		inviaStatoAlClient(SALVATO_PRIMO_ACCESSO);
         return ;
     }

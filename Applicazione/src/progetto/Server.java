@@ -12,7 +12,7 @@ public class Server { /*IL SERVER CONTIENE TUTTE LE MAP E LIST E GESTISCE TUTTA 
 	private GerarchiaWrapper gerarchie;
 	private FattoriDiConversioneWrapper fattoriConversione;
 	private ComprensorioWrapper comprensori; // Mappa dei comprensori
-	private Map<String, String> credenziali = new HashMap<>(); // Mappa username -> password
+	private Map<String, String> credenzialiConfig = new HashMap<>(); // Mappa username -> password
 	private GestorePersistenza gp = new GestorePersistenza();
 
 	
@@ -36,7 +36,7 @@ public class Server { /*IL SERVER CONTIENE TUTTE LE MAP E LIST E GESTISCE TUTTA 
                caricaDati();
               // System.out.println(System.getProperty("java.class.path"));
                
-               ClientHandler clientHandler = new ClientHandler(clientSocket, gerarchie, fattoriConversione, comprensori, credenziali, gp);
+               ClientHandler clientHandler = new ClientHandler(clientSocket, gerarchie, fattoriConversione, comprensori, credenzialiConfig, gp);
                Thread clientThread =  new Thread(clientHandler);
                clientThread.start();
             }
@@ -46,10 +46,10 @@ public class Server { /*IL SERVER CONTIENE TUTTE LE MAP E LIST E GESTISCE TUTTA 
         }
     }
     public void caricaDati() {
-    	comprensori = new ComprensorioWrapper(gp.caricaComprensori());    	
-    	gerarchie = new GerarchiaWrapper(gp.caricaGerarchie());
-    	//fattoriConversione = new FattoriDiConversioneWrapper(gp.caricaFattoriConversione());
-    	credenziali = gp.caricaCredenziali();
+    	comprensori = gp.caricaComprensori();    	
+    	gerarchie = gp.caricaGerarchie();
+    	fattoriConversione = gp.caricaFattoriConversione();
+    	credenzialiConfig = gp.caricaCredenzialiConfig();
     }
 }
 

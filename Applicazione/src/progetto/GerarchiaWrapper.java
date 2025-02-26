@@ -3,10 +3,6 @@ package progetto;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-
-@XmlRootElement(name = "gerarchie")
 public class GerarchiaWrapper {
 
     private List<Gerarchia> gerarchie;
@@ -14,8 +10,12 @@ public class GerarchiaWrapper {
     public GerarchiaWrapper(List<Gerarchia> gerarchie) {
     	this.gerarchie = gerarchie;
     }
+    
+    public GerarchiaWrapper() {
+    	
+    }
 
-    @XmlElement(name = "gerarchia")
+    
     public List<Gerarchia> getGerarchie() {
     	if (gerarchie == null) {
     		gerarchie = new ArrayList<>();

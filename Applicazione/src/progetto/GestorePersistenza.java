@@ -1,149 +1,112 @@
 package progetto;
-import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
-import javax.xml.bind.Unmarshaller;
+import java.io.*;
+import java.util.*;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 public class GestorePersistenza {
 
-    private static final String FILE_GERARCHIE = "/Applicazione/src/progetto/gerarchie.xml";
-    private static final String FILE_COMPRENSORI = "comprensori.xml";
-    private static final String FILE_FATTORI = "fattori_di_conversione.xml";
-    private static final String CREDENZIALI = "credenziali.xml"; 
-
-    // Metodo per salvare la lista di gerarchie su file in formato XML
+    private static final String FILE_GERARCHIE = "../Applicazione/src/dati/gerarchie.json";
+    private static final String FILE_COMPRENSORI = "../Applicazione/src/dati/comprensori.json";
+    private static final String FILE_FATTORI = "../Applicazione/src/dati/fattoriDiConversione.json";
+    private static final String FILE_CREDENZIALI_CONFIGURATORI = "../Applicazione/src/dati/credenzialiConfiguratori.json"; 
+    private Gson gson;
+    
+    public GestorePersistenza() {
+		super();
+		this.gson = new GsonBuilder().setPrettyPrinting().create();
+	}
+    
+    // Metodo per salvare la lista di gerarchie su file in formato JSON
     public void salvaGerarchie(List<Gerarchia> gerarchie) {
         try {
-            JAXBContext context = JAXBContext.newInstance(GerarchiaWrapper.class);
-            Marshaller marshaller = context.createMarshaller();
-            marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-
-            GerarchiaWrapper wrapper = new GerarchiaWrapper(gerarchie);
-            wrapper.setGerarchie(gerarchie);
-
-            marshaller.marshal(wrapper, new File(FILE_GERARCHIE));
-        } catch (JAXBException e) {
+            FileWriter fileGerarchie = new FileWriter(FILE_GERARCHIE);
+            gson.toJson(gerarchie, fileGerarchie);
+			System.out.println("Salvataggio gerarchie in 'gerarchie.json' avvenuto con successo");
+        } catch (IOException e) {
             System.err.println("Errore durante il salvataggio delle gerarchie: " + e.getMessage());
         }
     }
 
-    // Metodo per caricare la lista di gerarchie da file XML
-    public List<Gerarchia> caricaGerarchie() {
+    // Metodo per caricare la lista di gerarchie da file JSON
+    public GerarchiaWrapper caricaGerarchie() {
+    	GerarchiaWrapper gerarchie = new GerarchiaWrapper();
         try {
-            JAXBContext context = JAXBContext.newInstance(GerarchiaWrapper.class);
-            Unmarshaller unmarshaller = context.createUnmarshaller();
-            GerarchiaWrapper wrapper = (GerarchiaWrapper) unmarshaller.unmarshal(new File(FILE_GERARCHIE));
-            return wrapper.getGerarchie();
-        } catch (JAXBException e) {
+           FileReader fileGerarchie = new FileReader(FILE_GERARCHIE);
+           gerarchie = gson.fromJson(fileGerarchie, GerarchiaWrapper.class);
+        } catch (IOException e) {
             System.err.println("Errore durante il caricamento delle gerarchie: " + e.getMessage());
-            return List.of();
         }
+        return gerarchie;
     }
 
-    // Metodo per salvare i comprensori geografici su file in formato XML
+    // Metodo per salvare i comprensori geografici su file in formato JSON
     public void salvaComprensori(ArrayList<Comprensorio> comprensori) {
         try {
-            JAXBContext context = JAXBContext.newInstance(ComprensorioWrapper.class);
-            Marshaller marshaller = context.createMarshaller();
-            marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-
-            ComprensorioWrapper wrapper = new ComprensorioWrapper(comprensori);
-            wrapper.setComprensori(comprensori);
-
-            marshaller.marshal(wrapper, new File(FILE_COMPRENSORI));
-        } catch (JAXBException e) {
+            FileWriter fileComprensori = new FileWriter(FILE_COMPRENSORI);
+            gson.toJson(comprensori, fileComprensori);
+            System.out.println("Salvataggio comprensori in 'comprensori.json' avvenuto con successo");
+        } catch (IOException e) {
             System.err.println("Errore durante il salvataggio dei comprensori: " + e.getMessage());
         }
     }
 
-    // Metodo per caricare i comprensori da file XML
-    public ArrayList<Comprensorio> caricaComprensori() {
+    // Metodo per caricare i comprensori da file JSON
+    public ComprensorioWrapper caricaComprensori() {
+    	ComprensorioWrapper comprensori = new ComprensorioWrapper();
         try {
-            JAXBContext context = JAXBContext.newInstance(ComprensorioWrapper.class);
-            Unmarshaller unmarshaller = context.createUnmarshaller();
-            ComprensorioWrapper wrapper = (ComprensorioWrapper) unmarshaller.unmarshal(new File(FILE_COMPRENSORI));
-            return wrapper.getComprensori();
-        } catch (JAXBException e) {
+            FileReader fileComprensori = new FileReader(FILE_COMPRENSORI);
+            comprensori = gson.fromJson(fileComprensori, ComprensorioWrapper.class);
+        } catch (IOException e) {
             System.err.println("Errore durante il caricamento dei comprensori: " + e.getMessage());
-            return new ArrayList<>();
         }
+        return comprensori;
     }
 
-    // Metodo per salvare i fattori di conversione su file in formato XML
+    // Metodo per salvare i fattori di conversione su file in formato JSON
     public void salvaFattoriConversione(Map<String, Double> fattoriConversione) {
         try {
-            JAXBContext context = JAXBContext.newInstance(FattoriDiConversioneWrapper.class);
-            Marshaller marshaller = context.createMarshaller();
-            marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-
-            FattoriDiConversioneWrapper wrapper = new FattoriDiConversioneWrapper();
-            wrapper.setFattoriDiConversione(fattoriConversione);
-
-            marshaller.marshal(wrapper, new File(FILE_FATTORI));
-        } catch (JAXBException e) {
+           FileWriter fileFattoriConv = new FileWriter(FILE_FATTORI);
+           gson.toJson(fattoriConversione, fileFattoriConv);
+        } catch (IOException e) {
             System.err.println("Errore durante il salvataggio dei fattori di conversione: " + e.getMessage());
         }
     }
 
-    // Metodo per caricare i fattori di conversione da file XML
-    public Map<String, Double> caricaFattoriConversione() {
+    // Metodo per caricare i fattori di conversione da file JSON
+    public FattoriDiConversioneWrapper caricaFattoriConversione() {
+    	FattoriDiConversioneWrapper fattoriConv = new FattoriDiConversioneWrapper();
         try {
-            JAXBContext context = JAXBContext.newInstance(FattoriDiConversioneWrapper.class);
-            Unmarshaller unmarshaller = context.createUnmarshaller();
-            FattoriDiConversioneWrapper wrapper = (FattoriDiConversioneWrapper) unmarshaller.unmarshal(new File(FILE_FATTORI));
-            return wrapper.getFattoriDiConversione();
-        } catch (JAXBException e) {
+           FileReader fileFattConv = new FileReader(FILE_FATTORI);
+           fattoriConv = gson.fromJson(fileFattConv, FattoriDiConversioneWrapper.class);
+        } catch (IOException e) {
             System.err.println("Errore durante il caricamento dei fattori di conversione: " + e.getMessage());
-            return new HashMap<>();
         }
+        return fattoriConv;
     }
     
-    //Metodo per caricare le credenziali su file in formato XML
-    public void salvaCredenziali(Map<String, String> credenziali) {
+    //Metodo per caricare le credenziali su file in formato JSON
+    public void salvaCredenzialiConfig(HashMap<String, String> credenzialiConfig) {
     	try {
-    		JAXBContext context = JAXBContext.newInstance(Autenticazione.class);
-    		Marshaller marshaller = context.createMarshaller();
-    		marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-    		    		
-    		marshaller.marshal(credenziali.toString(), new File(CREDENZIALI));
-    	} catch (JAXBException e) {
+    		FileWriter fileCredenzialiConfig = new FileWriter(FILE_CREDENZIALI_CONFIGURATORI);
+    		gson.toJson(credenzialiConfig, fileCredenzialiConfig);
+    	} catch (IOException e) {
     		System.err.println("Errore durante il salvataggio dei credenziali: " + e.getMessage());
     	}
     }
     
     // Metodo per caricare i fattori di conversione da file XML
-    public HashMap<String, String> caricaCredenziali() {
+    public HashMap<String, String> caricaCredenzialiConfig() {
+    	HashMap<String, String> credenzialiConfig = new HashMap<>();
     	try {
-    		JAXBContext context = JAXBContext.newInstance(Autenticazione.class);
-    		Unmarshaller unmarshaller = context.createUnmarshaller();
-    		return (HashMap<String, String>) unmarshaller.unmarshal(new File(CREDENZIALI));
-    	} catch (JAXBException e) {
+    		FileReader fileCredenzialiConfig = new FileReader(FILE_CREDENZIALI_CONFIGURATORI);
+    		credenzialiConfig = gson.fromJson(fileCredenzialiConfig, HashMap.class);
+    	} catch (IOException e) {
     		System.err.println("Errore durante il caricamento delle credenziali: " + e.getMessage());
-    		return new HashMap<>();
     	}
+    	return credenzialiConfig;
     }
     
-    
-  /*  
-   * METODO VECCHIO PER SALVARE LE CREDENZIALI
-   * 
-   * public void salvaCredenziali(Map<String, String> credenziali) {
-    	try (BufferedWriter writer = new BufferedWriter(new FileWriter(new File(CREDENZIALI)))) {
-    		for(Map.Entry<String, String> entry: credenziali.entrySet()) {
-    			writer.write(entry.getKey() + ":" + entry.getValue());
-    			writer.newLine();
-    		}
-    		writer.flush();
-			System.out.println("Salvataggio dei credenziali completato.");
-		} catch (IOException e) {
-			System.out.println("Errore durante il salvataggio delle credenziali: " + e.getMessage());
-		
-	    } 
-    }*/
 }
