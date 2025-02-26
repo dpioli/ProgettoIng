@@ -92,6 +92,7 @@ public class GestorePersistenza {
     	try {
     		FileWriter fileCredenzialiConfig = new FileWriter(FILE_CREDENZIALI_CONFIGURATORI);
     		gson.toJson(credenzialiConfig, fileCredenzialiConfig);
+    		fileCredenzialiConfig.close();
     	} catch (IOException e) {
     		System.err.println("Errore durante il salvataggio dei credenziali: " + e.getMessage());
     	}
