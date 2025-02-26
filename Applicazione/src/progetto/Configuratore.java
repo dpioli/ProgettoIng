@@ -2,8 +2,8 @@ package progetto;
 
 public class Configuratore { 
 	
-	private String username;
-    private String password;
+	//private String username;
+  //  private String password;
     private Autenticazione autenticazione;
     
     public Configuratore(Autenticazione autenticazione) {
@@ -24,10 +24,10 @@ public class Configuratore {
 	public void effettuaPrimoAccesso(String nuovoUsername, String nuovaPassword) {
 
 		autenticazione.registraNuoveCredenziali(nuovoUsername, nuovaPassword);
-		autenticazione.salvaCredenziali();
+		//autenticazione.salvaCredenziali();
 		
-		this.username = nuovoUsername;
-		this.password = nuovaPassword;
+	//	this.username = nuovoUsername;
+		//this.password = nuovaPassword;
 	}
 /*
     public void visualizzaFattoriConversione(FattoreConversione fattoriConversione) {

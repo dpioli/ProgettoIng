@@ -87,8 +87,8 @@ public class ClientHandler implements Runnable {
         this.gerarchie = gerarchie;
         this.fattoriConversione = fattoriConversione;
         this.comprensori = comprensori;
-        this.autenticazione = new Autenticazione();
         this.gp = gp;
+        this.autenticazione = new Autenticazione(gp);
     }
 
     @Override
@@ -255,8 +255,8 @@ public class ClientHandler implements Runnable {
         }while(nuovaPassword.length() < 7);
         
 		conf.effettuaPrimoAccesso(nuovoUsername, nuovaPassword);
-		credenzialiConfig.put(nuovoUsername, nuovaPassword);
-		gp.salvaCredenzialiConfig(credenzialiConfig);
+		//credenzialiConfig.put(nuovoUsername, nuovaPassword);
+		//gp.salvaCredenzialiConfig(credenzialiConfig);
 		inviaStatoAlClient(SALVATO_PRIMO_ACCESSO);
         return ;
     }

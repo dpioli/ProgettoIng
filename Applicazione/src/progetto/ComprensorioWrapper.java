@@ -32,10 +32,11 @@ public class ComprensorioWrapper {
     }
     
     public boolean ePresenteComprensorio(String nome) {
-    	for(Comprensorio c: comprensori) {
-    		if(c.ePresente(nome))
-    			return true;
-    	}
+    	if(comprensori != null)
+	    	for(Comprensorio c: comprensori) {
+	    		if(c.ePresente(nome))
+	    			return true;
+	    	}
     	return false;
     }
     

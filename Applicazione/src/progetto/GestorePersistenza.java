@@ -100,9 +100,13 @@ public class GestorePersistenza {
     // Metodo per caricare i fattori di conversione da file XML
     public HashMap<String, String> caricaCredenzialiConfig() {
     	HashMap<String, String> credenzialiConfig = new HashMap<>();
-    	try {
-    		FileReader fileCredenzialiConfig = new FileReader(FILE_CREDENZIALI_CONFIGURATORI);
+    	File file = new File(FILE_CREDENZIALI_CONFIGURATORI);
+    	if(file.exists())
+    	try(FileReader fileCredenzialiConfig = new FileReader(file)) {
     		credenzialiConfig = gson.fromJson(fileCredenzialiConfig, HashMap.class);
+    		if(credenzialiConfig == null) {
+    			credenzialiConfig = new HashMap<>();
+    		}
     	} catch (IOException e) {
     		System.err.println("Errore durante il caricamento delle credenziali: " + e.getMessage());
     	}
