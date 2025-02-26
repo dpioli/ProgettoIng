@@ -5,21 +5,16 @@ import java.util.List;
 
 public class ComprensorioWrapper {
 
-    private ArrayList<Comprensorio> comprensori;
+    private ArrayList<Comprensorio> comprensori = new ArrayList<>();
     
     public ComprensorioWrapper(ArrayList<Comprensorio> comprensori) {
     	this.comprensori = comprensori;
 	}
-
 	
     public ComprensorioWrapper() {
 	}
 
-
 	public ArrayList<Comprensorio> getComprensori() {
-		if (comprensori == null) {
-	        comprensori = new ArrayList<>();
-	    }
 	    return comprensori;
     }
 
@@ -28,7 +23,8 @@ public class ComprensorioWrapper {
     }
     
     public void aggiungiNuovoComprensorio(String nomeComprensorio, List<String> comuni) {
-        comprensori.add(new Comprensorio(nomeComprensorio, comuni));
+    	if(comprensori != null)
+    		comprensori.add(new Comprensorio(nomeComprensorio, comuni));
     }
     
     public boolean ePresenteComprensorio(String nome) {
@@ -47,29 +43,4 @@ public class ComprensorioWrapper {
         }
         return b.toString();
     }
-    
-    /* 
-     * IN CLASSE GESTIONEPERSISTENZE
-     * 
-    public static void salvaConfigurazione(ComprensorioWrapper configurazione, String filename) {
-        try {
-            JAXBContext context = JAXBContext.newInstance(ComprensorioWrapper.class);
-            Marshaller marshaller = context.createMarshaller();
-            marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-            marshaller.marshal(configurazione, new File(filename));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-    
-   	public static ComprensorioWrapper caricaConfigurazione(String filename) {
-		try {
-			JAXBContext context = JAXBContext.newInstance(ComprensorioWrapper.class);
-			Unmarshaller unmarshaller = context.createUnmarshaller();
-			return (ComprensorioWrapper) unmarshaller.unmarshal(new File(filename));
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
-	}*/
 }

@@ -259,12 +259,8 @@ public class MenuInterattivo {
     	String nomeCateg = scanner.nextLine();
     	
     	clientHandler.ricercaSottocategorie(nomeGerarch, nomeCateg);
-    	
-    	
-    	
     }
     
-
 	public void visualizzaComprensori() {
         clientHandler.comprensori.toString();
     }

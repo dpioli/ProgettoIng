@@ -5,7 +5,7 @@ import java.util.List;
 
 public class GerarchiaWrapper {
 
-    private List<Gerarchia> gerarchie;
+    private List<Gerarchia> gerarchie = new ArrayList<>();
     
     public GerarchiaWrapper(List<Gerarchia> gerarchie) {
     	this.gerarchie = gerarchie;
@@ -15,21 +15,19 @@ public class GerarchiaWrapper {
     	
     }
 
-    
     public List<Gerarchia> getGerarchie() {
-    	if (gerarchie == null) {
-    		gerarchie = new ArrayList<>();
-        }
-        return gerarchie;
+    	//if (gerarchie != null)
+    		return gerarchie;
+    }
+    
+    public void setGerarchie(List<Gerarchia> gerarchie) {
+    	this.gerarchie = gerarchie;
     }
     
     public void aggiungiGerarchia(Gerarchia radice) {
-    	gerarchie.add(radice);
-    }
-
-    public void setGerarchie(List<Gerarchia> gerarchie) {
-        this.gerarchie = gerarchie;
-    }
+    	if(gerarchie != null)
+    		gerarchie.add(radice);
+    }	
 
 	public boolean ePresenteGerarchia(String nomeGerarchia) {
 		for(Gerarchia g: gerarchie) {
