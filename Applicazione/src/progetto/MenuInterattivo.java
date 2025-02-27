@@ -267,6 +267,7 @@ public class MenuInterattivo {
 
     public void visualizzaGerarchie() {
         System.out.println("Gerarchie presenti:");
+        clientHandler.gerarchie.toString();
     }
     
     /*

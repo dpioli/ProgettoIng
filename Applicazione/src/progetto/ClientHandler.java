@@ -74,7 +74,7 @@ public class ClientHandler implements Runnable {
 	
 	
 	private Socket clientSocket;
-    private GerarchiaWrapper gerarchie;
+    public GerarchiaWrapper gerarchie;
     private FattoriDiConversioneWrapper fattoriConversione;
     public ComprensorioWrapper comprensori;
     private GestorePersistenza gp;
@@ -277,8 +277,7 @@ public class ClientHandler implements Runnable {
     	
     	if(gerarchie.ePresenteGerarchia(nomeGerarchia)) {
     		inviaStatoAlClient(GERARCHIA_ESISTENTE);
-    		//bisogna decidere cosa fare!!
-    		gp.salvaGerarchie(gerarchie.getGerarchie());
+    		//gp.salvaGerarchie(gerarchie.getGerarchie());
     		return null;
     	} else {
     		CampoCaratteristico campoCaratteristico = new CampoCaratteristico(nomeCampo);
@@ -297,7 +296,6 @@ public class ClientHandler implements Runnable {
     	
     	if(gerarchie.ePresenteGerarchia(nomeCategoria)) {
     		inviaStatoAlClient(CATEGORIA_ESISTENTE);
-    		//bisogna decidere cosa fare!!
     		return null;
     	} else {
     		CampoCaratteristico campoCaratteristico = new CampoCaratteristico(nomeCampo);
@@ -309,8 +307,19 @@ public class ClientHandler implements Runnable {
     }
 
 
-	public void ricercaSottocategorie(String nomeGerarch, String nomeCateg) {
-		// TODO Auto-generated method stub
+	public Categoria ricercaSottocategorie(String nomeGerarch, String nomeCateg) {
+		if (gerarchie.ePresenteGerarchia(nomeGerarch)) {
+			Gerarchia nomeG = gerarchie.estraiGerarchia(nomeGerarch);
+			Categoria radice = nomeG.getRadice();
+			for(Categoria c: radice.getSottocategorie()) {
+				if(c.eUguale(nomeCateg))
+					return c;
+			}
+		} else {
+			out.println("Non è presente nessuna gerarchia con questo nome -> " + nomeGerarch);
+		}
+		
+		return null;
 		
 	}
    

@@ -36,6 +36,14 @@ public class GerarchiaWrapper {
 		}
 		return false;
 	}
+	
+	public Gerarchia estraiGerarchia(String nomeGerarchia) {
+		for(Gerarchia g: gerarchie) {
+			if (g.eUgualeNomeRadice(nomeGerarchia))
+				return g;
+		}
+		return null;
+	}
 	   
     public String toString() {
     	StringBuffer b = new StringBuffer();
